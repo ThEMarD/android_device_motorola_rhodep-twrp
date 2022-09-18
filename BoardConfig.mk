@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/motorola/cebu
+DEVICE_PATH := device/motorola/caprip
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := bengal
@@ -64,16 +64,19 @@ BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 \
 			androidboot.memcg=1 \
 			lpm_levels.sleep_disabled=1 \
 			video=vfb:640x400,bpp=32,memsize=3072000 \
-			msm_rtb.filter=0x237\
+			msm_rtb.filter=0x237 \
 			service_locator.enable=1 \
-			loop.maxpart=7 \
+			loop.max_part=7 \
 			swiotlb=2048 \
+			androidboot.hab.csv=16 \
+			androidboot.hab.product=caprip \
+			androidboot.hab.cid=50 \
 			firmware_class.path=/vendor/firmware_mnt/image
 # For the love of all that is holy, please do not include this in your ROM unless you really want TWRP to not work correctly!
 BOARD_KERNEL_CMDLINE += androidboot.fastboot=1
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
-BOARD_BOOTIMG_HEADER_VERSION := 2
+BOARD_BOOTIMG_HEADER_VERSION := 3
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_BASE          := 0x00000000
 BOARD_KERNEL_OFFSET        := 0x00008000
@@ -81,21 +84,21 @@ BOARD_RAMDISK_OFFSET       := 0x01000000
 BOARD_KERNEL_SECOND_OFFSET := 0x00000000
 BOARD_KERNEL_TAGS_OFFSET   := 0x00000100
 BOARD_DTB_OFFSET           := 0x01f00000
-#BOARD_KERNEL_SEPARATED_DTBO := true
-BOARD_INCLUDE_RECOVERY_DTBO := true
-#BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
 
 #TARGET_KERNEL_VERSION := 4.19
 #TARGET_KERNEL_CLANG_COMPILE := true
 #TARGET_KERNEL_CLANG_VERSION := r353983d
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
-#TARGET_KERNEL_SOURCE := kernel/motorola/cebu
-TARGET_KERNEL_CONFIG := cebu_defconfig
+#BOARD_KERNEL_SEPARATED_DTBO := true
+#BOARD_INCLUDE_RECOVERY_DTBO := true
+#TARGET_KERNEL_SOURCE := kernel/motorola/caprip
+#TARGET_KERNEL_CONFIG := vendor/caprip_defconfig
 
-BOARD_KERNEL_IMAGE_NAME := Image.gz
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz
-TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+BOARD_KERNEL_IMAGE_NAME := kernel
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
@@ -111,7 +114,6 @@ BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 # File systems
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 50616843776
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
@@ -119,17 +121,17 @@ BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 
 # A/B device flags
-TARGET_NO_KERNEL := false
-TARGET_NO_RECOVERY := false
-BOARD_USES_RECOVERY_AS_BOOT := false
+TARGET_NO_RECOVERY := true
+BOARD_USES_RECOVERY_AS_BOOT := true
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 
 # Super
-BOARD_SUPER_PARTITION_SIZE := 9763291136
+BOARD_SUPER_PARTITION_SIZE := 10804527104
 BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 4877451264
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 5398069248
 BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     system \
+    system_ext \
     product \
     vendor
 
@@ -174,10 +176,6 @@ BOARD_USES_METADATA_PARTITION := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 TW_USE_FSCRYPT_POLICY := 1
 
-# Installer
-#USE_RECOVERY_INSTALLER := true
-#RECOVERY_INSTALLER_PATH := device/motorola/cebu/installer
-
 # TWRP Configuration
 TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
@@ -196,6 +194,8 @@ TW_INCLUDE_NTFS_3G := true
 TW_INCLUDE_RESETPROP := true
 #TW_NO_SCREEN_BLANK := true
 TW_HAS_EDL_MODE := true
+TW_Y_OFFSET := 48
+TW_H_OFFSET := -48
 
 # Debug flags
 TWRP_INCLUDE_LOGCAT := true
@@ -208,6 +208,40 @@ TARGET_COPY_OUT_PRODUCT := product
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Kernel module loading
-TW_LOAD_VENDOR_MODULES := "exfat.ko fpc1020_mmi.ko ktd3136_bl.ko leds_aw99703.ko mmi_annotate.ko mmi_info.ko mmi_sys_temp.ko moto_f_usbnet.ko nova_0flash_mmi.ko qpnp_adaptive_charge.ko qpnp-power-on-mmi.ko sensors_class.ko utags.ko"
+TW_LOAD_VENDOR_MODULES := "exfat.ko \
+            nova_0flash_mmi.ko \
+            ili9882_mmi.ko \
+            mmi_annotate.ko \
+            mmi_info.ko \
+            mmi_sys_temp.ko \
+            moto_f_usbnet.ko \
+            qpnp_adaptive_charge.ko \
+            qpnp-power-on-mmi.ko \
+            sensors_class.ko \
+            utags.ko"
+
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
+
+#
+# For local builds only
+#
+# TWRP zip installer
+ifneq ($(wildcard bootable/recovery/installer/.),)
+    USE_RECOVERY_INSTALLER := true
+    RECOVERY_INSTALLER_PATH := bootable/recovery/installer
+endif
+
+# Custom TWRP Versioning
+ifneq ($(wildcard device/common/version-info/.),)
+    CUSTOM_TWRP_VERSION_PREFIX := UNOFFICIAL
+
+    include device/common/version-info/custom_twrp_version.mk
+
+    ifeq ($(CUSTOM_TWRP_VERSION),)
+        CUSTOM_TWRP_VERSION := $(shell date +%Y%m%d)-01
+    endif
+endif
+#
+# end local build flags
+#

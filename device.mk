@@ -28,7 +28,7 @@ PRODUCT_PLATFORM := bengal
 # A/B support
 AB_OTA_UPDATER := true
 
-LOCAL_PATH := device/motorola/cebu
+LOCAL_PATH := device/motorola/caprip
 
 # A/B
 AB_OTA_PARTITIONS += \
@@ -90,18 +90,10 @@ PRODUCT_SYSTEM_PROPERTY_BLACKLIST += \
 PRODUCT_COPY_FILES += \
     $(OUT_DIR)/target/product/$(PRODUCT_RELEASE_NAME)/obj/SHARED_LIBRARIES/libandroidicu_intermediates/libandroidicu.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libandroidicu.so
 
-# OEM otacert
-PRODUCT_EXTRA_RECOVERY_KEYS += \
-    $(LOCAL_PATH)/security/ota
-
 # Copy modules for depmod
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/chipone_tddi_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/chipone_tddi_mmi.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/focaltech_0flash_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/focaltech_0flash_mmi.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/exfat.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/exfat.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/fpc1020_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/fpc1020_mmi.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/ktd3136_bl.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/ktd3136_bl.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/leds_aw99703.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/leds_aw99703.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/ili9882_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/ili9882_mmi.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_annotate.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_annotate.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_info.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_info.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_sys_temp.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_sys_temp.ko \
