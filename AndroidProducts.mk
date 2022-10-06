@@ -17,7 +17,7 @@
 #
 
 PRODUCT_MAKEFILES := \
-     $(LOCAL_DIR)/twrp_caprip.mk
+     $(LOCAL_DIR)/twrp_rhodep.mk
 
 COMMON_LUNCH_CHOICES := \
-    twrp_caprip-userdebug
+    twrp_rhodep-userdebug

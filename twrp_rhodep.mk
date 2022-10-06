@@ -22,18 +22,18 @@ $(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/embedded.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-# Inherit from caprip device
-$(call inherit-product, device/motorola/caprip/device.mk)
+# Inherit from rhodep device
+$(call inherit-product, device/motorola/rhodep/device.mk)
 
 # Inherit some common TWRP stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Release name
-PRODUCT_RELEASE_NAME := caprip
+PRODUCT_RELEASE_NAME := rhodep
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := caprip
-PRODUCT_NAME := twrp_caprip
+PRODUCT_DEVICE := rhodep
+PRODUCT_NAME := twrp_rhodep
 PRODUCT_BRAND := motorola
-PRODUCT_MODEL := moto g(30)
+PRODUCT_MODEL := moto g(82) 5g
 PRODUCT_MANUFACTURER := motorola

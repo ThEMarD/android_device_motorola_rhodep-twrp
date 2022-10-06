@@ -16,18 +16,18 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/motorola/caprip
+DEVICE_PATH := device/motorola/rhodep
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := bengal
+TARGET_BOOTLOADER_BOARD_NAME := holi
 TARGET_NO_BOOTLOADER := true
 TARGET_USES_UEFI := true
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
-QCOM_BOARD_PLATFORMS += bengal
-TARGET_BOARD_PLATFORM := bengal
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno610
+QCOM_BOARD_PLATFORMS += holi
+TARGET_BOARD_PLATFORM := holi
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno619
 TARGET_USES_64_BIT_BINDER := true
 TARGET_SUPPORTS_64_BIT_APPS := true
 BUILD_BROKEN_DUP_RULES := true
@@ -39,15 +39,14 @@ TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := generic
-TARGET_CPU_VARIANT_RUNTIME := kryo260
+TARGET_CPU_VARIANT_RUNTIME := kryo300
 
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv8-a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
-TARGET_2ND_CPU_VARIANT_RUNTIME := kryo260
-TARGET_BOARD_SUFFIX := _64
+TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a75
 
 # Enable CPUSets
 ENABLE_CPUSETS := true
@@ -58,7 +57,7 @@ BOARD_PROVIDES_GPTUTILS := true
 
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 \
-			earlycon=msm_geni_serial,0x4a90000 \
+			earlycon=msm_geni_serial,0x04C8C000 \
 			androidboot.hardware=qcom \
 			androidboot.console=ttyMSM0 \
 			androidboot.memcg=1 \
@@ -67,10 +66,9 @@ BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 \
 			msm_rtb.filter=0x237 \
 			service_locator.enable=1 \
 			loop.max_part=7 \
-			swiotlb=2048 \
-			androidboot.hab.csv=16 \
-			androidboot.hab.product=caprip \
-			androidboot.hab.cid=50 \
+			androidboot.hab.csv=2 \
+			androidboot.hab.product=rhodep \
+			androidboot.hab.cid=50
 			firmware_class.path=/vendor/firmware_mnt/image
 # For the love of all that is holy, please do not include this in your ROM unless you really want TWRP to not work correctly!
 BOARD_KERNEL_CMDLINE += androidboot.fastboot=1
@@ -88,13 +86,10 @@ BOARD_DTB_OFFSET           := 0x01f00000
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 
-#TARGET_KERNEL_VERSION := 4.19
-#TARGET_KERNEL_CLANG_COMPILE := true
-#TARGET_KERNEL_CLANG_VERSION := r353983d
 #BOARD_KERNEL_SEPARATED_DTBO := true
 #BOARD_INCLUDE_RECOVERY_DTBO := true
-#TARGET_KERNEL_SOURCE := kernel/motorola/caprip
-#TARGET_KERNEL_CONFIG := vendor/caprip_defconfig
+#TARGET_KERNEL_SOURCE := kernel/motorola/rhodep
+#TARGET_KERNEL_CONFIG := vendor/rhodep_defconfig
 
 BOARD_KERNEL_IMAGE_NAME := kernel
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
@@ -114,7 +109,6 @@ BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 # File systems
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 50616843776
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -124,16 +118,6 @@ BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 TARGET_NO_RECOVERY := true
 BOARD_USES_RECOVERY_AS_BOOT := true
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
-
-# Super
-BOARD_SUPER_PARTITION_SIZE := 10804527104
-BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 5398069248
-BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := \
-    system \
-    system_ext \
-    product \
-    vendor
 
 # Recovery
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
@@ -214,16 +198,37 @@ TARGET_COPY_OUT_PRODUCT := product
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Kernel module loading
-TW_LOAD_VENDOR_MODULES := "exfat.ko \
-            nova_0flash_mmi.ko \
-            ili9882_mmi.ko \
+TW_LOAD_VENDOR_MODULES := "adapter_class.ko \
+            bq2589x_charger.ko \
+            bq2597x_mmi_iio.ko \
+            cw2217b_fg_mmi.ko \
+            exfat.ko \
+            goodix_brl_mmi.ko \
+            ldo_vibrator_mmi.ko \
             mmi_annotate.ko \
+            mmi_charger.ko \
+            mmi_discrete_charger_class.ko \
+            mmi_discrete_charger.ko \
             mmi_info.ko \
             mmi_sys_temp.ko \
             moto_f_usbnet.ko \
             qpnp_adaptive_charge.ko \
-            qpnp-power-on-mmi.ko \
+            rt_pd_manager.ko \
             sensors_class.ko \
+            sgm4154x_charger.ko \
+            sm5602_fg_mmi.ko \
+            synaptics_tcm_core.ko \
+            synaptics_tcm_device.ko \
+            synaptics_tcm_diagnostics.ko \
+            synaptics_tcm_i2c.ko \
+            synaptics_tcm_recovery.ko \
+            synaptics_tcm_reflash.ko \
+            synaptics_tcm_spi.ko \
+            synaptics_tcm_testing.ko \
+            synaptics_tcm_touch.ko \
+            synaptics_tcm_zeroflash.ko \
+            tcpc_class.ko \
+            tcpc_sgm7220.ko \
             utags.ko"
 
 # For building with minimal manifest

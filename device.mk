@@ -23,12 +23,12 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
 # define hardware platform
-PRODUCT_PLATFORM := bengal
+PRODUCT_PLATFORM := holi
 
 # A/B support
 AB_OTA_UPDATER := true
 
-LOCAL_PATH := device/motorola/caprip
+LOCAL_PATH := device/motorola/rhodep
 
 # A/B
 AB_OTA_PARTITIONS += \
@@ -36,7 +36,6 @@ AB_OTA_PARTITIONS += \
     system \
     vendor \
     product \
-    recovery \
     vbmeta \
     vbmeta_system \
     dtbo
@@ -88,14 +87,32 @@ PRODUCT_SYSTEM_PROPERTY_BLACKLIST += \
 
 # Copy modules for depmod
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/adapter_class.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/adapter_class.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/cw2217b_fg_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/cw2217b_fg_mmi.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/exfat.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/exfat.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/ili9882_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/ili9882_mmi.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_annotate.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_annotate.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_charger.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_charger.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_discrete_charger_class.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_discrete_charger_class.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_discrete_charger.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_discrete_charger.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_info.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_info.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/mmi_sys_temp.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/mmi_sys_temp.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/moto_f_usbnet.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/moto_f_usbnet.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/nova_0flash_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/nova_0flash_mmi.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/qpnp_adaptive_charge.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/qpnp_adaptive_charge.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/qpnp-power-on-mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/qpnp-power-on-mmi.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/rt_pd_manager.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/rt_pd_manager.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/sensors_class.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/sensors_class.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/sgm4154x_charger.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/sgm4154x_charger.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/sm5602_fg_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/sm5602_fg_mmi.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_core.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_core.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_device.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_device.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_diagnostics.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_diagnostics.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_i2c.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_i2c.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_recovery.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_recovery.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_reflash.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_reflash.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_spi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_spi.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_testing.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_testing.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_touch.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_touch.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/synaptics_tcm_zeroflash.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/synaptics_tcm_zeroflash.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/tcpc_class.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/tcpc_class.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/tcpc_sgm7220.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/tcpc_sgm7220.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/ldo_vibrator_mmi.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/ldo_vibrator_mmi.ko \
     $(LOCAL_PATH)/recovery/root/vendor/lib/modules/1.1/utags.ko:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1/utags.ko
